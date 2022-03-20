@@ -21,9 +21,7 @@ public class EnemyController : MonoBehaviour
         ballPosY = ball.transform.position.y;
         enemyPosY = enemy.transform.position.y;
         if(ballPosY + proximity < enemyPosY | ballPosY - proximity > enemyPosY){
-            Debug.Log("First if");
             if(ball.transform.position.x - initialPosX <= maxDistance){            
-                Debug.Log("Catching the ball");
                 Vector2 move = new Vector2(0,ball.transform.position.y - enemy.transform.position.y);
                 enemy.transform.Translate(move * Time.deltaTime * enemySpeed);
             }
