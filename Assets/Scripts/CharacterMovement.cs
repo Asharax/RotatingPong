@@ -5,22 +5,27 @@ using UnityEngine;
 public class CharacterMovement : MonoBehaviour
 {
     private GameObject player;
-    private float playerSpeed = 4f;
-    private Vector2 playerVelocity;
-
-
-    // Start is called before the first frame update
+    private float playerSpeed, rotationSpeed;
+    private Vector2 playerVelocity, move;
+    private Vector3 vectorZ;
     void Start(){
-        Debug.Log("The game is started"); 
-        player = GameObject.FindGameObjectsWithTag("Player")[0];
+        player =  this.gameObject;
+        playerSpeed = 4f;
+        rotationSpeed = 10000;
+        vectorZ = new Vector3(0f, 0f, 1f);
     }
-
     void Update()
     {
-        Vector2 move = new Vector2(0,Input.GetAxis("Vertical"));
+        moveCharacter();
+        if(Input.GetKeyDown(KeyCode.Space))
+            RotatePaddle();
+    }
+    private void RotatePaddle(){
+        player.transform.Rotate(vectorZ * Time.deltaTime * rotationSpeed);
+    }
+    private void moveCharacter(){
+        move = new Vector2(Input.GetAxis("Horizontal"),Input.GetAxis("Vertical"));
         object test = move * Time.deltaTime * playerSpeed;
-        Debug.Log("test");
-        player.transform.Translate(move * Time.deltaTime * playerSpeed);
-        // player.transform.Translate(playerVelocity * Time.deltaTime);
+        player.transform.Translate(move * Time.deltaTime * playerSpeed,Space.World);
     }
 }
